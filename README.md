@@ -1,7 +1,7 @@
 
 # faircorp Back End #
 
-* An application which will able to manage the building windows
+* An application which will able to manage smart building 
 
 **By Sara Assefa ALEMAYEHU**
 
