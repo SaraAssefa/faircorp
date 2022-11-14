@@ -7,7 +7,7 @@
 
 ** End points **
 
-# Building controller 
+** Building controller 
 
 | HTTP method | URL | Comment |
 
@@ -16,7 +16,7 @@
 * GET  /api/building/{id} | returns a specific building by id|
 * DELETE  /api/building/{id} | deletes a building by id|
 
-# Room controller 
+** Room controller 
 
 | HTTP method | URL | Comment |
 
@@ -27,7 +27,7 @@
 * PUT /api/rooms/{id}/switch-heater | change all heater status in room if ON to OFF or viceversa |
 * PUT /api/rooms/{id}/switch-window | change all window status in room if OPEN to CLOSED or viceversa |
 
-# Heater controller 
+** Heater controller 
 
 | HTTP method | URL | Comment |
 
@@ -37,7 +37,7 @@
 * DELETE /api/heaters/{id} | deletes a heater by id|
 * PUT /api/heaters/{id}/switch | change heater status if ON to OFF or viceversa |
 
-# Window controller 
+** Window controller 
 
 | HTTP method | URL | Comment |
 
@@ -47,7 +47,7 @@
 * DELETE /api/windows/{id} | deletes a window by id|
 * PUT /api/windows/{id}/switch | change window's status if OPEN to CLOSED or viceversa|
 
-#Security controller 
+** Security controller 
 
 | HTTP method | URL | Comment |
 
@@ -55,10 +55,10 @@
 
 ** User Credentials **
 
-# USER
+** USER
   * username: user
   * password: myPassword
-# ADMIN 
+** ADMIN 
   * username: admin
   * password: admin
   
