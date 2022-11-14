@@ -15,7 +15,7 @@ public class Building {
     @OneToMany(mappedBy = "building")
     private List<Room> rooms;
 
-    public Building() {
+    public Building(String name) {
     }
 
     public Building(Long id, String name) {
@@ -46,4 +46,5 @@ public class Building {
     public void setRooms(List<Room> rooms) {
         this.rooms = rooms;
     }
+
 }

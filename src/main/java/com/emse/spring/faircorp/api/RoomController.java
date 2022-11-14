@@ -1,25 +1,37 @@
 package com.emse.spring.faircorp.api;
 
 import com.emse.spring.faircorp.dao.BuildingDao;
+import com.emse.spring.faircorp.dao.HeaterDao;
 import com.emse.spring.faircorp.dao.RoomDao;
+import com.emse.spring.faircorp.dao.WindowDao;
+import com.emse.spring.faircorp.dto.HeaterDto;
 import com.emse.spring.faircorp.dto.RoomDto;
-import com.emse.spring.faircorp.model.Building;
-import com.emse.spring.faircorp.model.Room;
+import com.emse.spring.faircorp.dto.WindowDto;
+import com.emse.spring.faircorp.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController // (1)
 @RequestMapping("/api/rooms") // (2)
 @Transactional // (3)
 public class RoomController {
-    @Autowired
-    private RoomDao roomDao;
-    @Autowired
-    private BuildingDao buildingDao;
+    private final RoomDao roomDao;
+    private final BuildingDao buildingDao;
+    private final WindowDao windowDao;
+    private final HeaterDao heaterDao;
+
+    public RoomController(RoomDao roomDao, BuildingDao buildingDao, WindowDao windowDao, HeaterDao heaterDao) {
+        this.roomDao = roomDao;
+        this.buildingDao = buildingDao;
+        this.windowDao = windowDao;
+        this.heaterDao = heaterDao;
+    }
 
     @GetMapping // (5)
     public List<RoomDto> findAll() {
@@ -48,9 +60,23 @@ public class RoomController {
         return roomDao.findById(id).map(RoomDto::new).orElse(null); // (7)
     }
 
-    @DeleteMapping(path = "/{room_id}")
+    @DeleteMapping(path = "/{id}")
     public void delete(@PathVariable Long room_id) {
         roomDao.deleteById(room_id);
     }
+    @PutMapping(path = "/{id}/switchWindow")
+    public WindowDto switchWindow(@PathVariable Long id) {
+        Window window = windowDao.findById(id).orElseThrow(IllegalArgumentException::new);
+        window.setWindowStatus(window.getWindowStatus() == WindowStatus.OPEN ? WindowStatus.CLOSED: WindowStatus.OPEN);
+        return new WindowDto(window);
+    }
 
+    @PutMapping(path = "/{id}/switchHeater")
+    public HeaterDto switchHeater(@PathVariable Long id) {
+        Heater heater = heaterDao.findById(id).orElseThrow(IllegalArgumentException::new);
+        heater.setHeaterStatus(heater.getHeaterStatus() == HeaterStatus.ON ? HeaterStatus.OFF: HeaterStatus.ON);
+        return new HeaterDto(heater);
+    }
 }
+
+

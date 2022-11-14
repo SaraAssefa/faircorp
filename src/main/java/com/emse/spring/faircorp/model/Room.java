@@ -47,14 +47,18 @@ public class Room {
         this.building = building;
         }
 
+    public Room(String s1, int i, int i1, int i2, Building building) {
+    }
 
-        public long getId() {
+
+    public long getId() {
         return id;
     }
 
     public void setId(long id) {
         this.id = id;
     }
+
 
     public int getFloor() {
         return floor;
