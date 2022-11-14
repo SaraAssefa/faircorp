@@ -10,10 +10,10 @@
 # Building controller 
 | HTTP method | URL | Comment |
 
-| GET | /api/building | returns a list of all buildings|
-| POST | /api/building | creates a new building |
-| GET | /api/building/{id} | returns a specific building by id|
-| DELETE | /api/building/{id} | deletes a building by id|
+# GET  /api/building | returns a list of all buildings|
+# POST  /api/building | creates a new building |
+# GET  /api/building/{id} | returns a specific building by id|
+# DELETE  /api/building/{id} | deletes a building by id|
 
 # Room controller 
 
