@@ -1,25 +1,26 @@
 
 # faircorp Back End #
 
-# An application which will able to manage the building windows
+* An application which will able to manage the building windows
 
 **By Sara Assefa ALEMAYEHU**
 
 ** End points **
 
 # Building controller 
+
 | HTTP method | URL | Comment |
 
-# GET  /api/building | returns a list of all buildings|
-# POST  /api/building | creates a new building |
-# GET  /api/building/{id} | returns a specific building by id|
-# DELETE  /api/building/{id} | deletes a building by id|
+* GET  /api/building | returns a list of all buildings|
+* POST  /api/building | creates a new building |
+* GET  /api/building/{id} | returns a specific building by id|
+* DELETE  /api/building/{id} | deletes a building by id|
 
 # Room controller 
 
 | HTTP method | URL | Comment |
 
-| GET | /api/rooms | returns a list of all rooms|
+* GET /api/rooms | returns a list of all rooms|
 | POST | /api/rooms | creates a new room |
 | GET | /api/rooms/{id} | returns a specific room by id|
 | DELETE | /api/rooms/{id} | deletes a room by id|
