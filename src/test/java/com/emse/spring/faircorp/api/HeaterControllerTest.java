@@ -1,11 +1,9 @@
-package com.emse.spring.faircorp.web;
+package com.emse.spring.faircorp.api;
 
-import com.emse.spring.faircorp.api.BuildingController;
-import com.emse.spring.faircorp.dao.BuildingDao;
 import com.emse.spring.faircorp.dao.HeaterDao;
 import com.emse.spring.faircorp.dao.RoomDao;
-import com.emse.spring.faircorp.dto.BuildingDto;
-import com.emse.spring.faircorp.model.Building;
+import com.emse.spring.faircorp.dto.HeaterDto;
+import com.emse.spring.faircorp.model.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,40 +25,42 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(BuildingController.class)
-public class BuildingControllerTest {
+@WebMvcTest(HeaterController.class)
+@WithMockUser(username = "admin", roles = "ADMIN")
+public class HeaterControllerTest {
     @Autowired
     private MockMvc mockMvc;
-
     @Autowired
     private ObjectMapper objectMapper;
-
+    @MockBean
+    private HeaterDao heaterDao;
 
     @MockBean
-    private BuildingDao buildingDao;
-    Long id;
+    private RoomDao roomDao;
 
-    @Test
+    Building building;
+
     @WithMockUser(username = "admin", roles = "ADMIN")
-    void shouldLoadBuildings() throws Exception {
-        given(buildingDao.findAll()).willReturn(List.of(
-                createBuilding("building 1"),
-                createBuilding("building 2")
+    @Test
+    void shouldLoadHeaters() throws Exception {
+        given(heaterDao.findAll()).willReturn(List.of(
+                createHeater("heater 1"),
+                createHeater("heater 2")
         ));
 
-        mockMvc.perform(get("/api/buildings").accept(APPLICATION_JSON))
+        mockMvc.perform(get("/api/heaters").accept(APPLICATION_JSON))
                 // check the HTTP response
                 .andExpect(status().isOk())
                 // the content can be tested with Json path
-                .andExpect(jsonPath("[*].name").value(containsInAnyOrder("building 1", "building 2")));
+                .andExpect(jsonPath("[*].name").value(containsInAnyOrder("heater 1", "heater 2")));
     }
 
     @Test
     @WithMockUser(username = "admin", roles = "ADMIN")
-    void shouldLoadABuildingAndReturnNullIfNotFound() throws Exception {
-        given(buildingDao.findById(999L)).willReturn(Optional.empty());
+    void shouldLoadAHeaterAndReturnNullIfNotFound() throws Exception {
+        given(heaterDao.findById(999L)).willReturn(Optional.empty());
 
-        mockMvc.perform(get("/api/buildings/999").accept(APPLICATION_JSON))
+        mockMvc.perform(get("/api/heaters/999").accept(APPLICATION_JSON))
                 // check the HTTP response
                 .andExpect(status().isOk())
                 // the content can be tested with Json path
@@ -69,40 +69,40 @@ public class BuildingControllerTest {
 
     @Test
     @WithMockUser(username = "admin", roles = "ADMIN")
-    void shouldLoadABuilding() throws Exception {
-        given(buildingDao.findById(999L)).willReturn(Optional.of(createBuilding("building 1")));
+    void shouldLoadAHeater() throws Exception {
+        given(heaterDao.findById(999L)).willReturn(Optional.of(createHeater("heater 1")));
 
-        mockMvc.perform(get("/api/buildings/999").accept(APPLICATION_JSON))
+        mockMvc.perform(get("/api/heaters/999").accept(APPLICATION_JSON))
                 // check the HTTP response
                 .andExpect(status().isOk())
                 // the content can be tested with Json path
-                .andExpect(jsonPath("$.name").value("building 1"));
+                .andExpect(jsonPath("$.name").value("heater 1"));
     }
-
     @Test
     @WithMockUser(username = "admin", roles = "ADMIN")
-    void shouldCreateBuilding() throws Exception {
-        Building expectedBuilding = createBuilding("building 1");
-        expectedBuilding.setId(null);
-        String json = objectMapper.writeValueAsString(new BuildingDto(expectedBuilding));
+    void shouldCreateHeater() throws Exception {
+        Heater expectedHeater = createHeater("heater 1");
+        expectedHeater.setId(null);
+        String json = objectMapper.writeValueAsString(new HeaterDto(expectedHeater));
 
-        given(buildingDao.save(any())).willReturn(expectedBuilding);
+        given(roomDao.getReferenceById(anyLong())).willReturn(expectedHeater.getRoom());
+        given(heaterDao.save(any())).willReturn(expectedHeater);
 
-        mockMvc.perform(post("/api/buildings/").with(csrf()).content(json).contentType(APPLICATION_JSON_VALUE))
+        mockMvc.perform(post("/api/heaters").with(csrf()).content(json).contentType(APPLICATION_JSON_VALUE))
                 // check the HTTP response
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name").value("building 1"));
+                .andExpect(jsonPath("$.name").value("heater 1"));
     }
-    private Building createBuilding(String name) {
-        return new Building(name);
-    }
+
     @Test
     @WithMockUser(username = "admin", roles = "ADMIN")
-    void shouldDeleteBuilding() throws Exception {
-        mockMvc.perform(delete("/api/buildings/999").with(csrf()))
+    void shouldDeleteHeater() throws Exception {
+        mockMvc.perform(delete("/api/heaters/999").with(csrf()))
                 .andExpect(status().isOk());
     }
 
+    private Heater createHeater(String name) {
+        Room room = new Room("S1", 1, 1, 1, building);
+        return new Heater(name, room, HeaterStatus.ON);
+    }
 }
-
-
