@@ -68,3 +68,5 @@
   * username: admin
   * password: adminPasswordS
   
+ Final application is hosted at: https://faircorp-sara-alemayehu.cleverapps.io/login
+ To test end points: https://faircorp-sara-alemayehu.cleverapps.io/swagger-ui/index.html
