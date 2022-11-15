@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
 @RestController
 @RequestMapping("/api/buildings")
 @Transactional
 public class BuildingController {
     private BuildingDao buildingDao;
 
-
-    public BuildingController(BuildingDao buildingDao) { // (4)
+    public BuildingController(BuildingDao buildingDao) {
         this.buildingDao = buildingDao;
     }
 
@@ -49,6 +49,8 @@ public class BuildingController {
         }
         return new BuildingDto(building);
     }
+
+
 }
 
 

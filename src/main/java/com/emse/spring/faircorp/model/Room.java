@@ -50,6 +50,10 @@ public class Room {
     public Room(String s1, int i, int i1, int i2, Building building) {
     }
 
+    public Room(String name, int floor, Double currentTemperature, Double targetTemperature, Building building) {
+
+    }
+
 
     public long getId() {
         return id;

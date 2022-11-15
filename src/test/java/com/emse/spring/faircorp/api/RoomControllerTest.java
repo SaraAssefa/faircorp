@@ -12,7 +12,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.Optional;
+
 import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -35,7 +38,6 @@ public class RoomControllerTest {
 
     Building building;
 
-
     @Test
     @WithMockUser(username = "admin", roles = "ADMIN")
     void shouldLoadARoomAndReturnNull() throws Exception {
@@ -43,6 +45,21 @@ public class RoomControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string(""));
     }
+    @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")
+    void shouldLoadARoomAndReturnValue() throws Exception {
+        mockMvc.perform(get("/api/rooms/-9").accept(APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(-9L))
+                .andExpect(jsonPath("$.name").value("Room2"));
+    }
 
+    @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")
+    void shouldDeleteRoom() throws Exception {
+        mockMvc.perform(delete("/api/rooms/-8").accept(APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().string(""));
+    }
 
 }
