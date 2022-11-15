@@ -11,9 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-
 import java.util.Optional;
-
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -61,5 +59,11 @@ public class RoomControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string(""));
     }
-
+    @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")
+    void shouldLoadAllRooms() throws Exception {
+        mockMvc.perform(get("/api/rooms").accept(APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(APPLICATION_JSON));
+    }
 }

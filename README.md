@@ -5,6 +5,11 @@
 
 **By Sara Assefa ALEMAYEHU**
 
+* Created 4 Related tables: Building, Room, Window, Heater
+* Created 4 Data Transfer Objects(DTO): BuildingDto, RoomDto, WindowDto, HeaterDto
+* Created 4 Data Access Objects (DAO): BuildingDao, RoomDao, HeaterDao, WindowDao
+* Tests to test DAO and Endpoint functionality (41 tests in total)
+
 ** End points **
 
 ** Building controller 
@@ -55,10 +60,11 @@
 
 ** User Credentials **
 
+** Two different types of users **
 ** USER
   * username: user
-  * password: myPassword
+  * password: userPasswordS
 ** ADMIN 
   * username: admin
-  * password: admin
+  * password: adminPasswordS
   

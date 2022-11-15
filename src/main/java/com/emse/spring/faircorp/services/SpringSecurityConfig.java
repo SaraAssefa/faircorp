@@ -21,8 +21,8 @@ public class SpringSecurityConfig {
             // We create a password encoder
         PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
             InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-            manager.createUser(User.withUsername("user").password(encoder.encode("userPassword")).roles(ROLE_USER).build());
-            manager.createUser(User.withUsername("admin").password(encoder.encode("adminPassword")).roles(ROLE_ADMIN).build());
+            manager.createUser(User.withUsername("user").password(encoder.encode("userPasswordS")).roles(ROLE_USER).build());
+            manager.createUser(User.withUsername("admin").password(encoder.encode("adminPasswordS")).roles(ROLE_ADMIN).build());
             return manager;
         }
 

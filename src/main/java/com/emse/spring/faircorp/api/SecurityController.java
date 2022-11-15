@@ -18,4 +18,10 @@ public class SecurityController {
     public ResponseEntity<String> findAll(@AuthenticationPrincipal UserDetails userDetails) {
         return ResponseEntity.ok(userDetails.getUsername());
     }
+    @GetMapping(path = "/{id}")
+    public String findUserName(@AuthenticationPrincipal UserDetails userDetails) {
+        return userDetails.getUsername();
+    }
+
+
 }
